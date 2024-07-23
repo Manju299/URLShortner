@@ -4,7 +4,7 @@ const URL = require("../model/UrlModel");
 
 async function handleCreateNewShortID(req, res) {
   const body = req.body;
-  if (!body) {
+  if (!body.url) {
     return res.status(400).json({ err: "Url Not found" });
   }
   const shortID = generateShortId();
@@ -13,7 +13,7 @@ async function handleCreateNewShortID(req, res) {
     redirectURL: body.url,
     visitHistory: [],
   });
-  return res.json({ ID: shortID });
+  return res.render("Home", { ID: shortID });
 }
 
 async function handleRedirectURL(req, res) {
@@ -43,8 +43,18 @@ async function handleGetAnlytics(req, res) {
   });
 }
 
+// async function handleALLUrls(req,res) {
+//   const URLS = await URL.find({ })
+//   console.log(URLS)
+//   return res.render("Home",{
+//     urls: URLS,
+//   });
+
+// }
+
 module.exports = {
   handleCreateNewShortID,
   handleRedirectURL,
   handleGetAnlytics,
+  // handleALLUrls
 };
